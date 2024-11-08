@@ -22,7 +22,12 @@ export class TrackModel implements Track {
   @IsNumber()
   duration: number;
 
-  constructor(name: string, artistId: string | null, albumId: string | null, duration: number) {
+  constructor(
+    name: string,
+    artistId: string | null,
+    albumId: string | null,
+    duration: number,
+  ) {
     this.id = uuidv4();
     this.name = name;
     this.artistId = artistId;

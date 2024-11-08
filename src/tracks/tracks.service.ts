@@ -12,7 +12,7 @@ export class TracksService {
   }
 
   findById(id: string): Track {
-    const track = this.tracks.find(track => track.id === id);
+    const track = this.tracks.find((track) => track.id === id);
     if (!track) {
       throw new NotFoundException();
     }
@@ -20,7 +20,12 @@ export class TracksService {
   }
 
   create(createTrackDto: CreateTrackDto): Track {
-    const newTrack = new Track(createTrackDto.name, createTrackDto.artistId, createTrackDto.albumId, createTrackDto.duration);
+    const newTrack = new Track(
+      createTrackDto.name,
+      createTrackDto.artistId,
+      createTrackDto.albumId,
+      createTrackDto.duration,
+    );
     this.tracks.push(newTrack);
     return newTrack;
   }
@@ -35,7 +40,7 @@ export class TracksService {
   }
 
   delete(id: string): void {
-    const trackIndex = this.tracks.findIndex(track => track.id === id);
+    const trackIndex = this.tracks.findIndex((track) => track.id === id);
     if (trackIndex === -1) {
       throw new NotFoundException();
     }

@@ -12,7 +12,7 @@ export class AlbumsService {
   }
 
   findById(id: string): Album {
-    const album = this.albums.find(album => album.id === id);
+    const album = this.albums.find((album) => album.id === id);
     if (!album) {
       throw new NotFoundException();
     }
@@ -20,7 +20,11 @@ export class AlbumsService {
   }
 
   create(createAlbumDto: CreateAlbumDto): Album {
-    const newAlbum = new Album(createAlbumDto.name, createAlbumDto.year, createAlbumDto.artistId);
+    const newAlbum = new Album(
+      createAlbumDto.name,
+      createAlbumDto.year,
+      createAlbumDto.artistId,
+    );
     this.albums.push(newAlbum);
     return newAlbum;
   }
@@ -35,7 +39,7 @@ export class AlbumsService {
   }
 
   delete(id: string): void {
-    const albumIndex = this.albums.findIndex(album => album.id === id);
+    const albumIndex = this.albums.findIndex((album) => album.id === id);
     if (albumIndex === -1) {
       throw new NotFoundException();
     }
