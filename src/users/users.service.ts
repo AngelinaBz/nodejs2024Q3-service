@@ -1,12 +1,11 @@
 import {
-  BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
-import { v4 as uuidv4 } from 'uuid';
+import { UserModel as User } from './interfaces/user.model';
 
 @Injectable()
 export class UsersService {
@@ -25,28 +24,18 @@ export class UsersService {
   }
 
   create(createUserDto: CreateUserDto): User {
-    if (!createUserDto.login || !createUserDto.password) {
-      throw new BadRequestException();
-    }
-    const newUser: User = {
-      id: uuidv4(),
-      login: createUserDto.login,
-      password: createUserDto.password,
-      version: 1,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    };
+    const newUser = new User(createUserDto.login, createUserDto.password);
     this.users.push(newUser);
     return { ...newUser, password: undefined };
   }
 
   update(id: string, updatePasswordDto: UpdatePasswordDto): User {
-    const user = this.findById(id);
+    const user = this.users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException();
     }
     if (user.password !== updatePasswordDto.oldPassword) {
-      throw new BadRequestException();
+      throw new ForbiddenException();
     }
     user.password = updatePasswordDto.newPassword;
     user.updatedAt = Date.now();
