@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { albums, tracks, artists, favorites } from 'src/constants';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class FavoritesService {
   addTrackToFavorites(id: string): string {
     const track = tracks.find((track) => track.id === id);
     if (!track) {
-      throw new NotFoundException();
+      throw new UnprocessableEntityException();
     }
 
     if (!favorites.tracks.includes(id)) {
@@ -40,7 +40,7 @@ export class FavoritesService {
   addAlbumToFavorites(id: string): string {
     const album = albums.find((album) => album.id === id);
     if (!album) {
-      throw new NotFoundException();
+      throw new UnprocessableEntityException();
     }
 
     if (!favorites.albums.includes(id)) {
@@ -60,7 +60,7 @@ export class FavoritesService {
   addArtistToFavorites(id: string): string {
     const artist = artists.find((artist) => artist.id === id);
     if (!artist) {
-      throw new NotFoundException();
+      throw new UnprocessableEntityException();
     }
 
     if (!favorites.artists.includes(id)) {
