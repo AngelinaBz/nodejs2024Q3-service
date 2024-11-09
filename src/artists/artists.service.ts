@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ArtistModel as Artist } from './interfaces/artist.model';
 import { CreateArtistDto } from './dtos/create-artist.dto';
 import { UpdateArtistDto } from './dtos/update-artist.dto';
-import { artists, albums, tracks } from 'src/constants';
+import { artists, albums, tracks, favorites } from 'src/constants';
 
 @Injectable()
 export class ArtistsService {
@@ -47,5 +47,7 @@ export class ArtistsService {
       track.artistId = null;
     });
     artists.splice(artistIndex, 1);
+    const artistIndexInFavs = favorites.artists.findIndex((artist) => artist === id);
+    favorites.artists.splice(artistIndexInFavs, 1);
   }
 }

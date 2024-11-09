@@ -74,6 +74,6 @@ export class FavoritesService {
     if (artistIndex === -1) {
       throw new NotFoundException();
     }
-    favorites.albums.splice(artistIndex, 1);
+    favorites.artists.splice(artistIndex, 1);
   }
 }

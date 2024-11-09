@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TrackModel as Track } from './interfaces/tracks.model';
 import { CreateTrackDto } from './dtos/create-track.dto';
 import { UpdateTrackDto } from './dtos/update-track.dto';
-import { tracks } from 'src/constants';
+import { tracks, favorites } from 'src/constants';
 
 @Injectable()
 export class TracksService {
@@ -44,5 +44,7 @@ export class TracksService {
       throw new NotFoundException();
     }
     tracks.splice(trackIndex, 1);
+    const trackIndexInFavs = favorites.tracks.findIndex((track) => track === id);
+    favorites.tracks.splice(trackIndexInFavs, 1);
   }
 }
