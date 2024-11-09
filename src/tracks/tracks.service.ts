@@ -2,17 +2,16 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TrackModel as Track } from './interfaces/tracks.model';
 import { CreateTrackDto } from './dtos/create-track.dto';
 import { UpdateTrackDto } from './dtos/update-track.dto';
+import { tracks } from 'src/constants';
 
 @Injectable()
 export class TracksService {
-  private tracks: Track[] = [];
-
   findAll(): Track[] {
-    return this.tracks;
+    return tracks;
   }
 
   findById(id: string): Track {
-    const track = this.tracks.find((track) => track.id === id);
+    const track = tracks.find((track) => track.id === id);
     if (!track) {
       throw new NotFoundException();
     }
@@ -26,12 +25,12 @@ export class TracksService {
       createTrackDto.albumId,
       createTrackDto.duration,
     );
-    this.tracks.push(newTrack);
+    tracks.push(newTrack);
     return newTrack;
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto): Track {
-    const track = this.tracks.find((track) => track.id === id);
+    const track = tracks.find((track) => track.id === id);
     if (!track) {
       throw new NotFoundException();
     }
@@ -40,10 +39,10 @@ export class TracksService {
   }
 
   delete(id: string): void {
-    const trackIndex = this.tracks.findIndex((track) => track.id === id);
+    const trackIndex = tracks.findIndex((track) => track.id === id);
     if (trackIndex === -1) {
       throw new NotFoundException();
     }
-    this.tracks.splice(trackIndex, 1);
+    tracks.splice(trackIndex, 1);
   }
 }

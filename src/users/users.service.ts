@@ -6,17 +6,16 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { UserModel as User } from './interfaces/user.model';
+import { users } from 'src/constants';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [];
-
   findAll(): User[] {
-    return this.users.map((user) => ({ ...user, password: undefined }));
+    return users.map((user) => ({ ...user, password: undefined }));
   }
 
   findById(id: string): User {
-    const user = this.users.find((user) => user.id === id);
+    const user = users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -25,12 +24,12 @@ export class UsersService {
 
   create(createUserDto: CreateUserDto): User {
     const newUser = new User(createUserDto.login, createUserDto.password);
-    this.users.push(newUser);
+    users.push(newUser);
     return { ...newUser, password: undefined };
   }
 
   update(id: string, updatePasswordDto: UpdatePasswordDto): User {
-    const user = this.users.find((user) => user.id === id);
+    const user = users.find((user) => user.id === id);
     if (!user) {
       throw new NotFoundException();
     }
@@ -44,10 +43,10 @@ export class UsersService {
   }
 
   delete(id: string): void {
-    const userIndex = this.users.findIndex((user) => user.id === id);
+    const userIndex = users.findIndex((user) => user.id === id);
     if (userIndex === -1) {
       throw new NotFoundException();
     }
-    this.users.splice(userIndex, 1);
+    users.splice(userIndex, 1);
   }
 }
