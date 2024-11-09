@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ArtistModel as Artist } from './interfaces/artist.model';
 import { CreateArtistDto } from './dtos/create-artist.dto';
 import { UpdateArtistDto } from './dtos/update-artist.dto';
-import { artists } from 'src/constants';
+import { artists, albums, tracks } from 'src/constants';
 
 @Injectable()
 export class ArtistsService {
@@ -38,6 +38,14 @@ export class ArtistsService {
     if (artistIndex === -1) {
       throw new NotFoundException();
     }
+    const relatedAlbums = albums.filter((album) => album.artistId === id);
+    relatedAlbums.forEach((album) => {
+      album.artistId = null;
+    });
+    const relatedTracks = tracks.filter((track) => track.artistId === id);
+    relatedTracks.forEach((track) => {
+      track.artistId = null;
+    });
     artists.splice(artistIndex, 1);
   }
 }
