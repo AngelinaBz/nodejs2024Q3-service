@@ -44,7 +44,9 @@ export class TracksService {
       throw new NotFoundException();
     }
     tracks.splice(trackIndex, 1);
-    const trackIndexInFavs = favorites.tracks.findIndex((track) => track === id);
+    const trackIndexInFavs = favorites.tracks.findIndex(
+      (track) => track === id,
+    );
     favorites.tracks.splice(trackIndexInFavs, 1);
   }
 }

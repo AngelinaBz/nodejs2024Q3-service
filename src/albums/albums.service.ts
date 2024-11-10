@@ -47,7 +47,9 @@ export class AlbumsService {
       track.albumId = null;
     });
     albums.splice(albumIndex, 1);
-    const albumIndexInFavs = favorites.albums.findIndex((album) => album === id);
+    const albumIndexInFavs = favorites.albums.findIndex(
+      (album) => album === id,
+    );
     favorites.albums.splice(albumIndexInFavs, 1);
   }
 }

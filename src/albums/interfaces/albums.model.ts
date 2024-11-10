@@ -1,4 +1,10 @@
-import { IsUUID, IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+  IsUUID,
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 import { Album } from './albums.interface';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,11 +21,10 @@ export class AlbumModel implements Album {
   @IsNotEmpty()
   year: number;
 
-  @IsString()
-  @IsUUID()
+  @IsOptional()
   artistId: string | null;
 
-  constructor(name: string, year: number, artistId: string | null) {
+  constructor(name: string, year: number, artistId: string | null = null) {
     this.id = uuidv4();
     this.name = name;
     this.year = year;

@@ -47,7 +47,9 @@ export class ArtistsService {
       track.artistId = null;
     });
     artists.splice(artistIndex, 1);
-    const artistIndexInFavs = favorites.artists.findIndex((artist) => artist === id);
+    const artistIndexInFavs = favorites.artists.findIndex(
+      (artist) => artist === id,
+    );
     favorites.artists.splice(artistIndexInFavs, 1);
   }
 }

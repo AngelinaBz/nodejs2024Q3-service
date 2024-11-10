@@ -1,4 +1,10 @@
-import { IsUUID, IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import {
+  IsUUID,
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+} from 'class-validator';
 import { Track } from './tracks.interface';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,12 +17,10 @@ export class TrackModel implements Track {
   @IsNotEmpty()
   name: string;
 
-  @IsUUID()
-  @IsString()
+  @IsOptional()
   artistId: string | null;
 
-  @IsUUID()
-  @IsString()
+  @IsOptional()
   albumId: string | null;
 
   @IsNumber()
@@ -24,8 +28,8 @@ export class TrackModel implements Track {
 
   constructor(
     name: string,
-    artistId: string | null,
-    albumId: string | null,
+    artistId: string | null = null,
+    albumId: string | null = null,
     duration: number,
   ) {
     this.id = uuidv4();
