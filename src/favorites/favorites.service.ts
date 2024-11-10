@@ -30,7 +30,7 @@ export class FavoritesService {
   }
 
   deleteTrackFromFavorites(id: string): void {
-    const trackIndex = tracks.findIndex((track) => track.id === id);
+    const trackIndex = favorites.tracks.findIndex((track) => track === id);
     if (trackIndex === -1) {
       throw new NotFoundException();
     }
@@ -50,7 +50,7 @@ export class FavoritesService {
   }
 
   deleteAlbumFromFavorites(id: string): void {
-    const albumIndex = albums.findIndex((album) => album.id === id);
+    const albumIndex = favorites.albums.findIndex((album) => album === id);
     if (albumIndex === -1) {
       throw new NotFoundException();
     }
@@ -70,7 +70,7 @@ export class FavoritesService {
   }
 
   deleteArtistFromFavorites(id: string): void {
-    const artistIndex = artists.findIndex((artist) => artist.id === id);
+    const artistIndex = favorites.artists.findIndex((artist) => artist === id);
     if (artistIndex === -1) {
       throw new NotFoundException();
     }
