@@ -1,0 +1,38 @@
+services:
+  app:
+    container_name: home-library
+    image: angelina1337bz/home-library
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: npm run start
+    depends_on:
+      - db
+    working_dir: /app
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - home-library-network
+    # volumes:
+    restart: always
+    # platform: linux/amd64
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    container_name: home-library-db
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    # volumes:
+    networks:
+      - home-library-network
+    restart: always
+# volumes:
+
+networks:
+  home-library-network:
+    driver: bridge
