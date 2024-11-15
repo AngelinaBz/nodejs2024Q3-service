@@ -1,7 +1,6 @@
 services:
   app:
     container_name: home-library
-    image: angelina1337bz/home-library
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,7 +14,11 @@ services:
       - ${PORT}:${PORT}
     networks:
       - home-library-network
-    # volumes:
+    volumes:
+      - type: bind
+        source: ./src
+        target: /opt/app/src
+      - ./logs:/opt/app/logs
     restart: always
     # platform: linux/amd64
   db:
@@ -27,11 +30,14 @@ services:
       - .env
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
-    # volumes:
+    volumes:
+      - postgress-db:/var/lib/postgresql/data
     networks:
       - home-library-network
     restart: always
-# volumes:
+
+volumes:
+  postgress-db:
 
 networks:
   home-library-network:
