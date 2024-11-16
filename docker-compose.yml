@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
-    command: npm run start
+    command: sh -c "npx prisma migrate deploy && npm run start:prod"
     depends_on:
       - db
     working_dir: /app
