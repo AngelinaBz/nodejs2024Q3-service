@@ -18,10 +18,10 @@ cd nodejs2024Q3-service
 npm install
 ```
 
-## Running application
+## Running application using Docker
 
 ```
-npm start
+docker compose up
 ```
 
 After starting the app on port (4000 as default) you can open
