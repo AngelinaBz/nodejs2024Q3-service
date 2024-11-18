@@ -53,19 +53,19 @@ model Track {
 }
 
 model FavoriteAlbum {
-  id      String      @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
   albumId String   @unique
   album   Album    @relation(fields: [albumId], references: [id])
 }
 
 model FavoriteArtist {
-  id       String     @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   artistId String  @unique
   artist   Artist  @relation(fields: [artistId], references: [id])
 }
 
 model FavoriteTrack {
-  id      String      @id @default(autoincrement())
+  id      Int      @id @default(autoincrement())
   trackId String   @unique
   track   Track    @relation(fields: [trackId], references: [id])
 }
