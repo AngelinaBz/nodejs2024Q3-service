@@ -42,7 +42,7 @@ CREATE TABLE "Track" (
 
 -- CreateTable
 CREATE TABLE "FavoriteAlbum" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "albumId" TEXT NOT NULL,
 
     CONSTRAINT "FavoriteAlbum_pkey" PRIMARY KEY ("id")
@@ -50,7 +50,7 @@ CREATE TABLE "FavoriteAlbum" (
 
 -- CreateTable
 CREATE TABLE "FavoriteArtist" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "artistId" TEXT NOT NULL,
 
     CONSTRAINT "FavoriteArtist_pkey" PRIMARY KEY ("id")
@@ -58,7 +58,7 @@ CREATE TABLE "FavoriteArtist" (
 
 -- CreateTable
 CREATE TABLE "FavoriteTrack" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "trackId" TEXT NOT NULL,
 
     CONSTRAINT "FavoriteTrack_pkey" PRIMARY KEY ("id")
