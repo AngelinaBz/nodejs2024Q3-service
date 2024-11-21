@@ -22,6 +22,14 @@ export class UsersService {
     return { ...user, password: undefined };
   }
 
+  async findByLogin(login: string) {
+    const user = users.find((user) => user.login === login);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
+  }
+
   create(createUserDto: CreateUserDto): User {
     const newUser = new User(createUserDto.login, createUserDto.password);
     users.push(newUser);
