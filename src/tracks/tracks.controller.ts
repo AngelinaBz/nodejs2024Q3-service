@@ -9,14 +9,17 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from './dtos/create-track.dto';
 import { UpdateTrackDto } from './dtos/update-track.dto';
+import { JwtAuthGuard } from 'src/auth/guard/auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
+@UseGuards(JwtAuthGuard)
 @Controller('track')
 export class TracksController {
   constructor(private readonly tracksService: TracksService) {}
