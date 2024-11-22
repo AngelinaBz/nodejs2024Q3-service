@@ -9,17 +9,14 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dtos/create-album.dto';
 import { UpdateAlbumDto } from './dtos/update-album.dto';
-import { JwtAuthGuard } from 'src/auth/guard/auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
-@UseGuards(JwtAuthGuard)
 @Controller('album')
 export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
