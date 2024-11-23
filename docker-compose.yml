@@ -15,10 +15,8 @@ services:
     networks:
       - home-library-network
     volumes:
-      - type: bind
-        source: ./src
-        target: /opt/app/src
-      - ./logs:/opt/app/logs
+      - ./src:/app/src
+      - ./logs:/app/logs
     restart: always
     # platform: linux/amd64
   db:
