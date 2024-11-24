@@ -29,7 +29,9 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
       if (stats.size >= this.maxSize && stats.size > 0) {
         this.rotateLog(filePath);
       }
-    } catch (error) {}
+    } catch (error) {
+      super.error(error.message);
+    }
   }
 
   private rotateLog(filePath: string) {
