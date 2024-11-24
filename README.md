@@ -18,6 +18,12 @@ cd nodejs2024Q3-service
 npm install
 ```
 
+## Running application
+
+```
+npm run start
+```
+
 ## Running application using Docker
 
 ```
