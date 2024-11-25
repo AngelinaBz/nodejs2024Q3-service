@@ -8,7 +8,8 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/AngelinaBz/nodejs2024Q3-service.git
+cd nodejs2024Q3-service
 ```
 
 ## Installing NPM modules
@@ -20,12 +21,24 @@ npm install
 ## Running application
 
 ```
-npm start
+npm run start
+```
+
+## Running application using Docker
+
+```
+docker compose up
 ```
 
 After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
+
+## Vulnerabilities scanning
+
+```
+npm run scan
+```
 
 ## Testing
 
