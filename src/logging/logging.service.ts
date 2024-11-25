@@ -1,4 +1,9 @@
-import { Injectable, ConsoleLogger, LoggerService } from '@nestjs/common';
+import {
+  Injectable,
+  ConsoleLogger,
+  LoggerService,
+  LogLevel,
+} from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -8,10 +13,20 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
   private maxSize: number;
   private logFilePath = path.join(__dirname, '../../logs/app.log');
   private logErrorFilePath = path.join(__dirname, '../../logs/error.log');
+  private currentLogLevel: number;
+
+  private logLevels: Record<LogLevel, number> = {
+    error: 0,
+    warn: 1,
+    log: 2,
+    debug: 3,
+    verbose: 4,
+  };
 
   constructor() {
     super();
     this.logLevel = process.env.LOG_LEVEL;
+    this.currentLogLevel = this.logLevels[this.logLevel as LogLevel] ?? 2;
     this.maxSize = (Number(process.env.LOG_FILE_MAX_SIZE) || 20) * 1024;
 
     const logDir = path.join(__dirname, '../../logs');
@@ -21,6 +36,10 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
 
     this.checkSize(this.logFilePath);
     this.checkSize(this.logErrorFilePath);
+  }
+
+  private isLogging(level: LogLevel): boolean {
+    return this.logLevels[level] <= this.currentLogLevel;
   }
 
   private checkSize(filePath: string) {
@@ -48,40 +67,40 @@ export class LoggingService extends ConsoleLogger implements LoggerService {
   }
 
   log(message: string) {
-    if (
-      this.logLevel === 'LOG' ||
-      this.logLevel === 'DEBUG' ||
-      this.logLevel === 'VERBOSE'
-    ) {
+    if (this.isLogging('log')) {
       this.writeToFile(this.logFilePath, `INFO: ${message}`);
       super.log(message);
     }
   }
 
   error(message: string, trace?: string) {
-    this.writeToFile(
-      this.logErrorFilePath,
-      `ERROR: ${message} - Trace: ${trace}`,
-    );
-    super.error(message, trace);
+    if (this.isLogging('error')) {
+      this.writeToFile(
+        this.logErrorFilePath,
+        `ERROR: ${message} - Trace: ${trace}`,
+      );
+      super.error(message, trace);
+    }
   }
 
   debug(message: string) {
-    if (this.logLevel === 'DEBUG' || this.logLevel === 'VERBOSE') {
+    if (this.isLogging('debug')) {
       this.writeToFile(this.logFilePath, `DEBUG: ${message}`);
       super.debug(message);
     }
   }
 
   verbose(message: string) {
-    if (this.logLevel === 'VERBOSE') {
+    if (this.isLogging('verbose')) {
       this.writeToFile(this.logFilePath, `VERBOSE: ${message}`);
       super.verbose(message);
     }
   }
 
   warn(message: string) {
-    this.writeToFile(this.logFilePath, `WARN: ${message}`);
-    super.warn(message);
+    if (this.isLogging('warn')) {
+      this.writeToFile(this.logFilePath, `WARN: ${message}`);
+      super.warn(message);
+    }
   }
 }
